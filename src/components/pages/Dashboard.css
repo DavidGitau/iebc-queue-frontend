@@ -1,0 +1,13 @@
+.p1 {
+    text-align: left;
+    font-weight: bold;
+    font-size: large;
+    color: black;
+}
+
+.p2 {
+    text-align: left;
+    font-weight: bolder;
+    font-size: large;
+    color: rgba(228, 237, 241, 0.583);
+}
