@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Common.css';
 
 const Header = ({ isLoggedIn, onLogout }) => {
+  const navigate = useNavigate()
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -22,6 +23,8 @@ const Header = ({ isLoggedIn, onLogout }) => {
 
       // Remove token from local storage
       localStorage.removeItem('token');
+
+      navigate('/');
     } catch (error) {
       console.log('Error logging out:', error);
     }
@@ -53,10 +56,16 @@ const Header = ({ isLoggedIn, onLogout }) => {
                       <Link to="/queues" className="nav-link text-ivory">Queues</Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/polling-stations" className="nav-link text-ivory">Polling Stations</Link>
+                      <Link to="/stations" className="nav-link text-ivory">Polling Stations</Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/admin" className="nav-link text-ivory">Profile</Link>
+                      <Link to="/wards" className="nav-link text-ivory">Wards</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/voters" className="nav-link text-ivory">Voters</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/" className="nav-link text-ivory">Profile</Link>
                     </li>
                   </>
                 ) : (
@@ -66,7 +75,7 @@ const Header = ({ isLoggedIn, onLogout }) => {
                       <Link to="/book" className="nav-link text-ivory">Book Queue</Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/profile" className="nav-link text-ivory">Profile</Link>
+                      <Link to="/" className="nav-link text-ivory">Profile</Link>
                     </li>
                   </>
                 )}

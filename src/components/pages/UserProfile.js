@@ -5,6 +5,7 @@ import './Dashboard.css'
 const UserProfile = () => {
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState('');
+  // setError('')
   // const date = new Date(profile.dob);
   // const options = { year: 'numeric', month: 'long', day: 'numeric' };
   // const formattedDate = date.toLocaleDateString(undefined, options);
@@ -59,7 +60,7 @@ const UserProfile = () => {
                         <br />
                         Age: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span className='p2'>&nbsp; {profile.age} </span>
                         <br/>
-                        Gender: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span className='p2'>&nbsp; { profile.gender == 'M' ? <span>Male</span> : <span>FeMale</span> } </span>
+                        Gender: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span className='p2'>&nbsp; { profile.gender === 'M' ? <span>Male</span> : <span>FeMale</span> } </span>
                         <br/>
                         ID Number:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                          <span className='p2'>&nbsp; {profile.id_number} </span>

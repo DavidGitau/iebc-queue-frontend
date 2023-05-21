@@ -7,10 +7,10 @@ import ProfilePage from '../pages/UserProfile';
 import './Login.css'
 import img1 from "../../assets/images/login/admin.png"
 import img2 from "../../assets/images/login/user.png"
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');  
@@ -72,7 +72,7 @@ const LoginPage = () => {
             </div>
             <form className="login100-form validate-form" onSubmit={handleLogin}>
               <div className="account-type">
-                <a
+                <div
                   className={`type-inner ${selectedType === 'user' ? 'selected' : ''}`}
                   onClick={() => handleTypeClick('user')}
                 >
@@ -85,8 +85,8 @@ const LoginPage = () => {
                       <CheckCircleFill className="check-icon" color="white" size={20} />
                     )}
                   </span>
-                </a>
-                <a
+                </div>
+                <div
                   className={`type-inner ${selectedType === 'admin' ? 'selected' : ''}`}
                   onClick={() => handleTypeClick('admin')}
                 >
@@ -99,7 +99,7 @@ const LoginPage = () => {
                       <CheckCircleFill className="check-icon" color="white" size={20} />
                     )}
                   </span>
-                </a>
+                </div>
               </div>
               <div className="wrap-input100 validate-input m-b-10" data-validate="Username is required">
                 <input className="input100" type="text" name="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />

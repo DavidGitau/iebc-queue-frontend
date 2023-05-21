@@ -1,13 +1,15 @@
-import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import './index.css'
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import UserProfile from './components/pages/UserProfile';
 import AdminProfile from './components/pages/AdminProfile';
 import LoginPage from './components/Login/LoginForm';
-
+import VoterList from './components/Voter/VoterList';
+import PollingStationList from './components/Station/StationList';
+import Wardlist from './components/Ward/WardList';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,7 +47,14 @@ const App = () => {
               )
             }
           />
-          {/* <Route path="/profile" element={isLoggedIn ? <UserProfile /> : <Navigate to="/" />} /> */}
+          {isLoggedIn && localStorage.getItem('userType') === 'admin' && (
+            <>
+            <Route path="/voters" element={<VoterList />} />,
+            <Route path="/stations" element={<PollingStationList />} />,
+            <Route path="/wards" element={<Wardlist />} />,
+            // <Route path="/voters" element={<VoterList />} />,
+            </>
+          )}
         </Routes>
         <Footer />
       </div>
