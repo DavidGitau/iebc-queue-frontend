@@ -2,7 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 import useFetchData from '../utils/Api';
 
-const AdminProfile = () => {
+const Profile = () => {
   const { data: profile, error } = useFetchData('profile');
 
   return (
@@ -78,4 +78,4 @@ const AdminProfile = () => {
   );
 };
 
-export default AdminProfile;
+export default Profile;

@@ -1,84 +1,151 @@
-import React from 'react';
-import { Link , useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Common.css';
 
 const Header = ({ isLoggedIn, onLogout }) => {
-  const navigate = useNavigate()
-  const handleLogout = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        // Token not available, handle the case
-        // ...
-        return;
-      }
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-      // Send logout request to the server
-      await axios.post('http://127.0.0.1:8000/api/logout/', null, {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
-
-      // Remove token from local storage
-      localStorage.removeItem('token');
-
-      navigate('/');
-    } catch (error) {
-      console.log('Error logging out:', error);
-    }
-
-    // Call the logout callback passed from the parent component
+  const handleLogout = () => {
+    localStorage.removeItem('token');
     onLogout();
+    navigate('/');
   };
 
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const userType = localStorage.getItem('userType'); // Get the user type from localStorage
+
   return (
-    <header className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <header className="navbar navbar-expand-lg navbar-primary bg-primary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+        <Link to="/" className="navbar-brand">
           <span className="brand-text text-ivory">IEBC</span>
-        </a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        </Link>
+        <button
+          className={`navbar-toggler ${isMenuOpen ? 'collapsed' : ''}`}
+          type="button"
+          aria-controls="navbarNav"
+          aria-expanded={isMenuOpen ? 'true' : 'false'}
+          aria-label="Toggle navigation"
+          onClick={handleMenuToggle}
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <div
+          className={`collapse navbar-collapse justify-content-end ${isMenuOpen ? 'show' : ''}`}
+          id="navbarNav"
+          onClick={closeMenu}
+        >
           <ul className="navbar-nav">
             {isLoggedIn ? (
               <>
-                <li className="nav-item active">
-                  <Link to="/" className="nav-link text-ivory">Home</Link>
-                </li>
-                {localStorage.getItem('userType') === 'admin' ? (
-                  // Show Queues, Polling Stations and Profile for admin
+                {/* <li className="nav-item active">
+                  <Link to="/" className="nav-link text-ivory">
+                    Home
+                  </Link>
+                </li> */}
+                {userType === 'admin' ? (
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link dropdown-toggle text-ivory"
+                      href="#"
+                      id="adminMenuDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Admin
+                    </Link>
+                    <ul className="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                      <li>
+                        <Link to="/voters" className="dropdown-item text-ivory">
+                          Voters
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/queues" className="dropdown-item text-ivory">
+                          Queues
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/stations" className="dropdown-item text-ivory">
+                          Polling Stations
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/wards" className="dropdown-item text-ivory">
+                          Wards
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/centers" className="dropdown-item text-ivory">
+                          Polling Centers
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/register-staff" className="dropdown-item text-ivory">
+                          Add Staff
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                ) : userType === 'staff' ? ( // Display the options for staff user type
                   <>
-                    <li className="nav-item">
-                      <Link to="/queues" className="nav-link text-ivory">Queues</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/stations" className="nav-link text-ivory">Polling Stations</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/wards" className="nav-link text-ivory">Wards</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/voters" className="nav-link text-ivory">Voters</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/" className="nav-link text-ivory">Profile</Link>
-                    </li>
-                  </>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link dropdown-toggle text-ivory"
+                      href="#"
+                      id="adminMenuDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Staff
+                    </Link>
+                    <ul className="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                      <li>
+                        <Link to="/manage-kims" className="dropdown-item text-ivory">
+                          Manage Kims
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/register-queue" className="dropdown-item text-ivory">
+                          Manage Queue
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/queue-detail" className="dropdown-item text-ivory">
+                          Queue Detail
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/center-detail" className="dropdown-item text-ivory">
+                          Center Detail
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                  
+                    </>
                 ) : (
-                  // Show Book Queue and Profile for user
-                  <>
-                    <li className="nav-item">
-                      <Link to="/book" className="nav-link text-ivory">Book Queue</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/" className="nav-link text-ivory">Profile</Link>
-                    </li>
-                  </>
+                  <li className="nav-item">
+                    <Link to="/book" className="nav-link text-ivory">
+                      Book Queue
+                    </Link>
+                  </li>
                 )}
+                <li className="nav-item">
+                  <Link to="/" className="nav-link text-ivory">
+                    Profile
+                  </Link>
+                </li>
                 <li className="nav-item">
                   <button className="nav-link text-ivory btn btn-link" onClick={handleLogout}>
                     Logout
@@ -88,10 +155,19 @@ const Header = ({ isLoggedIn, onLogout }) => {
             ) : (
               <>
                 <li className="nav-item active">
-                  <Link to="/" className="nav-link text-ivory">Home</Link>
+                  <Link to="/" className="nav-link text-ivory">
+                    Home
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/" className="nav-link text-ivory">Login</Link>
+                  <Link to="/" className="nav-link text-ivory">
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/register" className="nav-link text-ivory">
+                    Register
+                  </Link>
                 </li>
               </>
             )}

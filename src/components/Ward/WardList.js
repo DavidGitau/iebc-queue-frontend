@@ -10,7 +10,7 @@ const Wardlist = () => {
   useEffect(() => {
     const fetchWards = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/wards/');
+        const response = await axios.get(`http://${window.location.hostname}:8000/api/wards/`);
         setWards(response.data);
       } catch (error) {
         console.log('Error fetching wardlist:', error);
@@ -35,28 +35,24 @@ const Wardlist = () => {
           <thead>
             <tr>
               <th>Ward ID</th>
-              <th>Name</th>
-              <th>Location</th>
-              <th>Total Voters</th>
-              <th>Registered Voters</th>
-              <th>Voter Turnout</th>
+              <th>Ward Name</th>
+              <th>Constituency ID</th>
+              <th>Constituency Name</th>
             </tr>
           </thead>
           <tbody>
             {currentWards.map((ward) => (
               <tr key={ward.id}>
-                <td>{ward.ward_id}</td>
+                <td>{ward.id}</td>
                 <td>{ward.name}</td>
-                <td>{ward.location}</td>
-                <td>{ward.total_voters}</td>
-                <td>{ward.registered_voters}</td>
-                <td>{ward.voter_turnout}</td>
+                <td>{ward.constituency.id}</td>
+                <td>{ward.constituency.name}</td>
               </tr>
             ))}
           </tbody>
         </table>
         {/* Pagination */}
-        <nav aria-label="...">
+        <nav aria-label="..." className="pagination1">
           <ul className="pagination">
             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
               <button className="page-link" onClick={() => paginate(currentPage - 1)}>Previous</button>

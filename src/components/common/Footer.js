@@ -3,7 +3,7 @@ import './Common.css';
 
 const Footer = () => {
   return (
-    <footer className="footer bg-dark">
+    <footer className="footer bg-primary">
       <div className="container">
         <p className="text-ivory text-center">© 2023 IEBC. All rights reserved.</p>
       </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ReactPaginate from 'react-paginate';
 import './Voter.css';
 
 const VoterList = () => {
@@ -11,7 +10,7 @@ const VoterList = () => {
   useEffect(() => {
     const fetchVoters = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/voters/');
+        const response = await axios.get(`http://${window.location.hostname}:8000/api/voters/`);
         const limitedVoters = response.data.slice(0, 100); // Limit to 100 voters
         setVoters(limitedVoters);
       } catch (error) {
@@ -30,19 +29,25 @@ const VoterList = () => {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // Calculate number of pages
+  const totalPages = Math.ceil(voters.length / votersPerPage);
+
+  // Generate page numbers for navigation
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
   return (
     <div className="limiter">
-      <div className="container-login100 lg1">
-        <table>
+      <div className="container-login100">
+        <h2>Voters</h2>
+        <table className="voter-list-table">
           <thead>
             <tr>
               <th>Voter ID</th>
               <th>Name</th>
               <th>Station</th>
-              {/* <th>Queue</th> */}
               <th>Service Time</th>
-              <th>Waiting Time</th>
               <th>Ticket Number</th>
+              <th>Timeslot</th>
               <th>Voted</th>
             </tr>
           </thead>
@@ -50,33 +55,34 @@ const VoterList = () => {
             {currentVoters.map((voter) => (
               <tr key={voter.profile.first_name}>
                 <td>{voter.id}</td>
-                <td>{voter.profile.first_name} {voter.profile.last_name}</td>
-                <td>{voter.station.name}</td>
-                {/* <td>{voter.queue.name}</td> */}
+                <td>
+                  {voter.profile.first_name} {voter.profile.last_name}
+                </td>
+                <td>{voter.center.name}</td>
                 <td>{voter.service_time}</td>
-                <td>{voter.waiting_time}</td>
-                <td>{voter.ticket_no}</td>
+                <td>{voter.ticket ? voter.ticket.id : '-' }</td>
+                <td>{voter.timeslot ? `${voter.timeslot.start} - ${voter.timeslot.stop}` : '-'}</td>
                 <td>{voter.voted === true ? <span>Yes</span> : <span>No</span>}</td>
               </tr>
             ))}
           </tbody>
         </table>
         {/* Pagination */}
-        <div className="pagination_section">
-          <ReactPaginate
-            previousLabel={'Previous'}
-            nextLabel={'Next'}
-            breakLabel={'...'}
-            breakClassName={'break-me'}
-            pageCount={Math.ceil(voters.length / votersPerPage)}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={(selectedItem) => paginate(selectedItem.selected + 1)}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
-          />
-        </div>
+        <nav aria-label="..." className="pagination1">
+          <ul className="pagination">
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => paginate(currentPage - 1)}>Previous</button>
+            </li>
+            {pageNumbers.map((pageNumber) => (
+              <li key={pageNumber} className={`page-item ${currentPage === pageNumber ? 'active' : ''}`}>
+                <button className="page-link" onClick={() => paginate(pageNumber)}>{pageNumber}</button>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => paginate(currentPage + 1)}>Next</button>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );
