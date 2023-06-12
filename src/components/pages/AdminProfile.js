@@ -1,5 +1,4 @@
 import React from 'react';
-import './Dashboard.css';
 import useFetchData from '../utils/Api';
 
 const AdminProfile = () => {

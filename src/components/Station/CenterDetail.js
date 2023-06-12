@@ -53,7 +53,7 @@ const CenterDetail = () => {
           <thead>
             <tr>
               <th>National ID</th>
-              <th>Voter ID</th>
+              <th>D.O.B</th>
               <th>Name</th>
               <th>Timeslot</th>
               <th>Queue</th>
@@ -65,7 +65,7 @@ const CenterDetail = () => {
             {currentVoters.map((voter) => (
               <tr key={voter.profile.id_number}>
                 <td> {voter.profile.id_number} </td>
-                <td> {voter.id} </td>
+                <td> {voter.profile.dob} </td>
                 <td>{voter.profile.first_name} {voter.profile.last_name}</td>
                 <td>{voter.timeslot ? `${voter.timeslot.start} - ${voter.timeslot.stop}` : '-'}</td>
                 <td>{voter.ticket && voter.ticket.station ? voter.ticket.station.id : '-'}</td>

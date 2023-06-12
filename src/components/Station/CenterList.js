@@ -10,7 +10,8 @@ const CenterList = () => {
     const fetchPollingCenters = async () => {
       try {
         const response = await axios.get(`http://${window.location.hostname}:8000/api/polling-centers/`);
-        setPollingCenters(response.data);
+      const sortedData = response.data.sort((a, b) => b.voter_no - a.voter_no);
+      setPollingCenters(sortedData);
       } catch (error) {
         console.log('Error fetching polling centers:', error);
       }
@@ -39,16 +40,19 @@ const CenterList = () => {
             <th>Ward</th>
             <th>Constituency</th>
             <th>County</th>
+            <th>Voter No</th>
           </tr>
         </thead>
         <tbody>
-          {currentPollingCenters.map((center) => (
+            {currentPollingCenters
+            .map((center) => (
             <tr key={center.id}>
               <td>{center.id}</td>
               <td>{center.name}</td>
               <td>{center.ward.name}</td>
               <td>{center.ward.constituency.name}</td>
               <td>{center.ward.constituency.county.name}</td>
+              <td>{center.voter_no}</td>
             </tr>
           ))}
         </tbody>

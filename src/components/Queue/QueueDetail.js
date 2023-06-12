@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../Voter/Voter.css';
 
 const QueueDetail = () => {
-  const [queue, setQueue] = useState([]);
+  const [queues, setQueue] = useState([]);
 
   useEffect(() => {
     const fetchQueues = async () => {
@@ -22,9 +21,9 @@ const QueueDetail = () => {
           }
         );
 
-        console.log(response.data);
+        // console.log(response.data);
         setQueue(response.data);
-        console.log(queue.length);
+        console.log(queues.length);
       } catch (error) {
         console.log('Error fetching queues:', error);
       }
@@ -41,30 +40,38 @@ const QueueDetail = () => {
 
   return (
     <div className="limiter">
-      <div className="container-login100">
-        <h2>Queues</h2>
-        {queue.tickets && queue.tickets.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Ticket ID</th>
-                <th>Station</th>
-                <th>Voter ID</th>
-              </tr>
-            </thead>
-            <tbody>
-              {queue.tickets.map((ticket) => (
-                <tr key={ticket.id}>
-                  <td>{ticket.id}</td>
-                  <td>{ticket.station.name} {ticket.station.id}</td>
-                  <td>{ticket.voter}</td>
+      <div className="container">
+      <div className="row">
+      {queues.map((queue) => (
+          <div className="col-md-6 container-login100">
+            <h5>Queue {queue.station.id}</h5>
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticket ID</th>
+                  <th>Voter ID</th>
+                  <th>Waiting time</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No tickets available</p>
-        )}
+              </thead>
+          {queue.tickets && queue.tickets.length > 0 ? (
+            <>
+              <tbody>
+                {queue.tickets.map((ticket) => (
+                  <tr key={ticket.id}>
+                    <td>{ticket.id}</td>
+                    <td>{ticket.voter.id}</td>
+                    <td>{ticket.voter.serive_time}</td>
+                  </tr>
+                ))}
+              </tbody></>
+          ) : (
+            <p></p>
+            )}
+            </table>
+              </div>
+          ) )
+        }
+        </div>
       </div>
     </div>
   );

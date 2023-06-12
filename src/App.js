@@ -21,6 +21,7 @@ import KimsManagement from './components/Queue/ManageKims';
 import KimsKit from './components/Queue/KimsKit';
 import QueueDetail from './components/Queue/QueueDetail';
 import CenterDetail from './components/Station/CenterDetail';
+import StaffList from './components/Staff/StaffList';
 
 
 const App = () => {
@@ -68,6 +69,7 @@ const App = () => {
               <Route path="/wards" element={<Wardlist />} />
               <Route path="/queues" element={<QueueList />} />
               <Route path="/centers" element={<CenterList />} />
+              <Route path='/staff-list' element={<StaffList />} />
               <Route path="/register-staff" element={<RegisterPage />} />
             </>
           )}

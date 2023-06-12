@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Voter.css';
 
 const VoterList = () => {
   const [voters, setVoters] = useState([]);
@@ -42,6 +41,7 @@ const VoterList = () => {
         <table className="voter-list-table">
           <thead>
             <tr>
+              <th>National ID</th>
               <th>Voter ID</th>
               <th>Name</th>
               <th>Station</th>
@@ -54,6 +54,7 @@ const VoterList = () => {
           <tbody>
             {currentVoters.map((voter) => (
               <tr key={voter.profile.first_name}>
+                <td>{voter.profile.id_number}</td>
                 <td>{voter.id}</td>
                 <td>
                   {voter.profile.first_name} {voter.profile.last_name}

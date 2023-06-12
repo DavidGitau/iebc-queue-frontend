@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
-import '../Voter/Voter.css';
 
 const QueueList = () => {
   const [queues, setQueues] = useState([]);

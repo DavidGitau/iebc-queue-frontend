@@ -25,9 +25,6 @@ const QueueRegistration = () => {
           },
         }
       );
-
-      // Handle the successful registration response here, if needed
-
       console.log('Registration successful!');
 
       // Redirect to home page
@@ -37,8 +34,6 @@ const QueueRegistration = () => {
     }
   }
 };
-
-
   return (
     <div className="limiter">
       <div className="container-login100" style={{ backgroundImage: "url('images/img-01.jpg')" }}>

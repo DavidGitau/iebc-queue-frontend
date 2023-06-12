@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Voter.css';
 
-const VoterList = () => {
+const StaffList = () => {
   const [voters, setVoters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [votersPerPage] = useState(10); // Number of voters to display per page
@@ -10,7 +9,7 @@ const VoterList = () => {
   useEffect(() => {
     const fetchVoters = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/voters');
+        const response = await axios.get(`http://${window.location.hostname}:8000/api/staffs/`);
         setVoters(response.data);
       } catch (error) {
         console.log('Error fetching voters:', error);
@@ -34,34 +33,28 @@ const VoterList = () => {
         <table>
           <thead>
             <tr>
-              <th>Voter ID</th>
+              <th>Staff ID</th>
+              <th>N ID</th>
               <th>Name</th>
-              <th>Station</th>
-              <th>Queue</th>
-              <th>Service Time</th>
-              <th>Waiting Time</th>
-              <th>Ticket Number</th>
-              <th>Voted</th>
+              <th>D.O.B</th>
+              <th>Center</th>
             </tr>
           </thead>
           <tbody>
-            {currentVoters.map((voter) => (
-              <tr key={voter.profile.first_name}>
-                <td>{voter.voter_id}</td>
-                <td>{voter.profile.first_name} {voter.profile.last_name}</td>
-                <td>{voter.station.name}</td>
-                <td>{voter.queue.name}</td>
-                <td>{voter.service_time}</td>
-                <td>{voter.waiting_time}</td>
-                <td>{voter.ticket_no}</td>
-                <td>{voter.voted === true ? <span>Yes</span> : <span>No</span>}</td>
+            {currentVoters.map((staff) => (
+              <tr key={staff.profile.first_name}>
+                <td>{staff.id}</td>
+                <td>{staff.profile.id_number}</td>
+                <td>{staff.profile.first_name} {staff.profile.last_name}</td>
+                <td>{staff.profile.dob}</td>
+                <td>{staff.center.name}</td>
               </tr>
             ))}
 
           </tbody>
         </table>
         {/* Pagination */}
-        <nav aria-label="...">
+        <nav aria-label="..."  className="pagination1">
           <ul className="pagination">
             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
               <button className="page-link" onClick={() => paginate(currentPage - 1)}>Previous</button>
@@ -81,4 +74,4 @@ const VoterList = () => {
   );
 };
 
-export default VoterList;
+export default StaffList;

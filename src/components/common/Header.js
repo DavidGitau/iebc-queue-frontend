@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Common.css';
 
 const Header = ({ isLoggedIn, onLogout }) => {
   const navigate = useNavigate();
@@ -87,6 +86,11 @@ const Header = ({ isLoggedIn, onLogout }) => {
                       <li>
                         <Link to="/centers" className="dropdown-item text-ivory">
                           Polling Centers
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/staff-list" className="dropdown-item text-ivory">
+                          Staffs
                         </Link>
                       </li>
                       <li>

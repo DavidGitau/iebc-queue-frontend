@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../Voter/Voter.css';
 
 const Wardlist = () => {
   const [wards, setWards] = useState([]);

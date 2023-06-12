@@ -3,7 +3,6 @@ import axios from 'axios';
 import { CheckCircleFill, LockFill, PeopleFill } from "react-bootstrap-icons";
 import ProfilePage from '../pages/UserProfile';
 
-import './Login.css'
 import img1 from "../../assets/images/login/admin.png"
 import img2 from "../../assets/images/login/user.png"
 

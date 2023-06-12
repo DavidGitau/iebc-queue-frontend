@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Dashboard.css';
 
 const UserProfile = () => {
   const [profile, setProfile] = useState(null);

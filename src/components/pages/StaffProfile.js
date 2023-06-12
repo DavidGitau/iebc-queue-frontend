@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import './Dashboard.css';
 
 const StaffProfile = () => {
   const [profile, setProfile] = useState(null);
@@ -35,6 +34,55 @@ const StaffProfile = () => {
 
     fetchProfile();
   }, []);
+  const handleAllocateTimeslot = async () => {
+    try {
+      const localNetworkAddress = `http://${window.location.hostname}:8000`;
+      const token = localStorage.getItem('token');
+      const centerId = localStorage.getItem('centerId');
+
+      const response = await axios.post(
+        `${localNetworkAddress}/api/allocate-timeslots/`,
+        { cid: centerId },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      console.log('Timeslot allocation response:', response.data);
+      // Handle the response accordingly, e.g., show a success message or redirect to a different page
+
+    } catch (error) {
+      console.log('Error allocating timeslot:', error);
+      // Handle the error accordingly, e.g., show an error message
+    }
+  };
+
+  const handleDisallocateTimeslot = async () => {
+    try {
+      const localNetworkAddress = `http://${window.location.hostname}:8000`;
+      const token = localStorage.getItem('token');
+      const centerId = localStorage.getItem('centerId');
+
+      const response = await axios.post(
+        `${localNetworkAddress}/api/disallocate-timeslots/`,
+        { cid: centerId },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      console.log('Timeslot disallocation response:', response.data);
+      // Handle the response accordingly, e.g., show a success message or redirect to a different page
+
+    } catch (error) {
+      console.log('Error disallocating timeslot:', error);
+      // Handle the error accordingly, e.g., show an error message
+    }
+  };
 
   return (
     <div>
@@ -99,6 +147,9 @@ const StaffProfile = () => {
                           <Link to="/manage-kims" className="smaller-button">
                             <button className="login100-form-btn">Manage KIMs</button>
                           </Link>
+                            <button className="login100-form-btn smaller-button" onClick={handleAllocateTimeslot}>Allocate Timeslots</button>
+                            <button className="login100-form-btn smaller-button" onClick={handleDisallocateTimeslot}>Disallocate Timeslots</button>
+                    
                         </div>
 
                     </div>
