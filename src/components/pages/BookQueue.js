@@ -9,6 +9,7 @@ const BookQueue = () => {
   const [timeField, setTimeField] = useState('');
   const [times, setTimes] = useState([]);
   const [error, setError] = useState('');
+  const [successm, setSucess] = useState('');
   const [voterId, setVoterId] = useState('');
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
@@ -55,6 +56,7 @@ const BookQueue = () => {
 
 
         if (response.data.success) {
+          setSucess(response.data.success);
           setShowSuccessPopup(true); // Show the success popup
         } else {
           setError(response.data.error);
@@ -155,7 +157,7 @@ const BookQueue = () => {
       </div>
       <PopupMessage
         show={showSuccessPopup}
-        message="Registration successful!"
+        message={successm}
         onClose={handleCloseSuccessPopup}
       />
     </div>

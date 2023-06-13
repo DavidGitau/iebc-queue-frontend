@@ -44,7 +44,7 @@ const QueueDetail = () => {
       <div className="row">
       {queues.map((queue) => (
           <div className="col-md-6 container-login100">
-            <h5>Queue {queue.station.id}</h5>
+            <h5>Queue {queue.station.id} - {queue.waiting_time} mins </h5>
             <table>
               <thead>
                 <tr>
@@ -60,7 +60,7 @@ const QueueDetail = () => {
                   <tr key={ticket.id}>
                     <td>{ticket.id}</td>
                     <td>{ticket.voter.id}</td>
-                    <td>{ticket.voter.serive_time}</td>
+                    <td>{ticket.waiting_time}</td>
                   </tr>
                 ))}
               </tbody></>

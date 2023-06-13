@@ -69,7 +69,7 @@ const CenterDetail = () => {
                 <td>{voter.profile.first_name} {voter.profile.last_name}</td>
                 <td>{voter.timeslot ? `${voter.timeslot.start} - ${voter.timeslot.stop}` : '-'}</td>
                 <td>{voter.ticket && voter.ticket.station ? voter.ticket.station.id : '-'}</td>
-                <td>{voter.ticket ? voter.ticket.id : '-'}</td>
+                <td>{voter.ticket ? voter.ticket: '-'}</td>
                 <td>{voter.voted ? 'Yes' : 'No'}</td>
               </tr>
             ))}

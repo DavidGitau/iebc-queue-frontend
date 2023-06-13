@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
 
 const QueueRegistration = () => {
   const navigate = useNavigate();
   const [idNumber, setIdNumber] = useState('');
   const [error, setError] = useState('');
+  const [successm, setSucess] = useState('');
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
  const handleRegisterQueue = async (e) => {
   e.preventDefault();
@@ -25,15 +28,46 @@ const QueueRegistration = () => {
           },
         }
       );
-      console.log('Registration successful!');
+      // console.log('Registration successful!');
+      if (response.data.success) {
+          setSucess(response.data.success);
+          setShowSuccessPopup(true); // Show the success popup
+        } else {
+          setError(response.data.error);
+        }
+
 
       // Redirect to home page
-      navigate('/');
+      // navigate('/');
     } catch (error) {
       setError(error.response.data.error);
     }
   }
-};
+  };
+
+  const handleCloseSuccessPopup = () => {
+    setShowSuccessPopup(false);
+    // navigate('/');
+  };
+
+  const PopupMessage = ({ show, message, onClose }) => {
+    return (
+      <Modal show={show} onHide={onClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Success Message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{message}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={onClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+
+  
+  
   return (
     <div className="limiter">
       <div className="container-login100" style={{ backgroundImage: "url('images/img-01.jpg')" }}>
@@ -65,6 +99,11 @@ const QueueRegistration = () => {
           </form>
         </div>
       </div>
+      <PopupMessage
+        show={showSuccessPopup}
+        message={successm}
+        onClose={handleCloseSuccessPopup}
+      />
     </div>
   );
 };
