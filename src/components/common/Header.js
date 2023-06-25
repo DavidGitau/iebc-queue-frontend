@@ -102,42 +102,41 @@ const Header = ({ isLoggedIn, onLogout }) => {
                   </li>
                 ) : userType === 'staff' ? ( // Display the options for staff user type
                   <>
-                  <li className="nav-item dropdown">
-                    <Link
-                      className="nav-link dropdown-toggle text-ivory"
-                      href="#"
-                      id="adminMenuDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Staff
-                    </Link>
-                    <ul className="dropdown-menu" aria-labelledby="adminMenuDropdown">
-                      <li>
-                        <Link to="/manage-kims" className="dropdown-item text-ivory">
-                          Manage Kims
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/register-queue" className="dropdown-item text-ivory">
-                          Manage Queue
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/queue-detail" className="dropdown-item text-ivory">
-                          Queue Detail
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/center-detail" className="dropdown-item text-ivory">
-                          Center Detail
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                  
-                    </>
+                    <li className="nav-item dropdown">
+                      <Link
+                        className="nav-link dropdown-toggle text-ivory"
+                        href="#"
+                        id="staffMenuDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Staff
+                      </Link>
+                      <ul className="dropdown-menu" aria-labelledby="staffMenuDropdown">
+                        <li>
+                          <Link to="/manage-kims" className="dropdown-item text-ivory">
+                            Manage Kims
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/register-queue" className="dropdown-item text-ivory">
+                            Manage Queue
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/queue-detail" className="dropdown-item text-ivory">
+                            Queue Detail
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/center-detail" className="dropdown-item text-ivory">
+                            Center Detail
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                  </>
                 ) : (
                   <li className="nav-item">
                     <Link to="/book" className="nav-link text-ivory">

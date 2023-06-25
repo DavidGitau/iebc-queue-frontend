@@ -1,0 +1,115 @@
+/* Styles for the progress bar */
+.custom-progress-bar .progress-bar {
+    background-color: #007bff;
+    animation: progress-animation 1s linear;
+}
+
+@keyframes progress-animation {
+    from {
+        width: 0;
+    }
+}
+
+/* Additional styles for the countdown timer */
+.countdown-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.countdown-timer {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Additional styles for the queue detail layout */
+.container-login100 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.grid-1-column {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.headerc {
+    text-align: center;
+    font-size: 24px;
+}
+
+.card {
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #e5e5e5;
+    font-weight: bold;
+}
+
+.user-table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.avatar-circle {
+    border-radius: 50%;
+}
+
+.medium {
+    font-size: 14px;
+}
+
+/* Additional styles for the images */
+.img1,
+.img2,
+.img3,
+.img4 {
+    width: 40px;
+    height: 40px;
+}
+
+.img1,
+.img2 {
+    background-color: #f7d794;
+}
+
+.img3,
+.img4 {
+    background-color: #ffbe76;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 767px) {
+    .grid-1-column {
+        grid-template-columns: 1fr;
+    }
+}

@@ -33,7 +33,6 @@ const LoginPage = () => {
       localStorage.setItem('userType', userType); // Save user type
       localStorage.setItem('voterId', voterId); // Save voterId
 
-
       // Clear form fields and error message
       setUsername('');
       setPassword('');

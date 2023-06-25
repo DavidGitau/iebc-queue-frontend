@@ -72,26 +72,26 @@ const UserProfile = () => {
                           <span className="p2-label">Age:</span>
                           <span className="p2-value">{profile.profile.age}</span>
                         </span>
-                        <span className="p2-container">
-                          <span className="p2-label">Gender:</span>
-                          <span className="p2-value">
-                            {profile.profile.gender === 'M' ? 'Male' : 'Female'}
+                        {profile.profile.gender !== undefined && (
+                          <span className="p2-container">
+                            <span className="p2-label">Gender:</span>
+                            <span className="p2-value">
+                              {profile.profile.gender === 'M' ? 'Male' : 'Female'}
+                            </span>
                           </span>
-                        </span>
+                        )}
                         <span className="p2-container">
                           <span className="p2-label">ID Number:</span>
                           <span className="p2-value">{profile.profile.id_number}</span>
                         </span>
-                        <span className="p2-container">
-                          <span className="p2-label">Timeslot:</span>
-                          <span className="p2-value">
-                            {profile.timeslot && profile.timeslot.start && profile.timeslot.stop ? (
-                              `${formatTime(profile.timeslot.start)} - ${formatTime(profile.timeslot.stop)}`
-                            ) : (
-                              'N/A'
-                            )}
+                        {profile.timeslot && profile.timeslot.start && profile.timeslot.stop && (
+                          <span className="p2-container">
+                            <span className="p2-label">Timeslot:</span>
+                            <span className="p2-value">
+                              {`${formatTime(profile.timeslot.start)} - ${formatTime(profile.timeslot.stop)}`}
+                            </span>
                           </span>
-                        </span>
+                        )}
                         <span className="p2-container">
                           <span className="p2-label">Voter ID:</span>
                           <span className="p2-value">{profile.id}</span>
@@ -103,7 +103,6 @@ const UserProfile = () => {
                           </span>
                         </span>
                       </p>
-
                     </div>
                   </div>
                   <div

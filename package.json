@@ -14,6 +14,7 @@
     "bootstrap-icons": "^1.10.5",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
+    "rc-slider": "^10.2.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-bootstrap-icons": "^1.10.3",

@@ -9,45 +9,41 @@ const QueueRegistration = () => {
   const [error, setError] = useState('');
   const [successm, setSucess] = useState('');
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [special, setSpecial] = useState(false); // New state for the special check
 
- const handleRegisterQueue = async (e) => {
-  e.preventDefault();
+  const handleRegisterQueue = async (e) => {
+    e.preventDefault();
 
-  if (idNumber) {
-    try {
-      const localNetworkAddress = `http://${window.location.hostname}:8000`;
-      const token = localStorage.getItem('token');
-      const cid = localStorage.getItem('centerId');
+    if (idNumber) {
+      try {
+        const localNetworkAddress = `http://${window.location.hostname}:8000`;
+        const token = localStorage.getItem('token');
+        const cid = localStorage.getItem('centerId');
 
-      const response = await axios.post(
-        `${localNetworkAddress}/api/register-queue/`,
-        { id: idNumber, cid: cid }, // Pass the cid along with the id
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
-      // console.log('Registration successful!');
-      if (response.data.success) {
+        const response = await axios.post(
+          `${localNetworkAddress}/api/register-queue/`,
+          { id: idNumber, cid: cid, special: special }, // Include the special check value in the request body
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+
+        if (response.data.success) {
           setSucess(response.data.success);
           setShowSuccessPopup(true); // Show the success popup
         } else {
           setError(response.data.error);
         }
-
-
-      // Redirect to home page
-      // navigate('/');
-    } catch (error) {
-      setError(error.response.data.error);
+      } catch (error) {
+        setError(error.response.data.error);
+      }
     }
-  }
   };
 
   const handleCloseSuccessPopup = () => {
     setShowSuccessPopup(false);
-    // navigate('/');
   };
 
   const PopupMessage = ({ show, message, onClose }) => {
@@ -66,8 +62,6 @@ const QueueRegistration = () => {
     );
   };
 
-  
-  
   return (
     <div className="limiter">
       <div className="container-login100" style={{ backgroundImage: "url('images/img-01.jpg')" }}>
@@ -81,16 +75,36 @@ const QueueRegistration = () => {
             <h3>Queue Registration</h3>
           </div>
           <form className="login100-form validate-form" onSubmit={handleRegisterQueue}>
-            <div className="wrap-input100 validate-input m-b-10" data-validate="ID number is required">
-              <input
-                className="input100"
-                type="text"
-                name="idNumber"
-                placeholder="Enter ID number"
-                value={idNumber}
-                onChange={(e) => setIdNumber(e.target.value)}
-              />
+            <div className="container">
+            <div className="row">
+              <div className="col-md-2 s-label"> {/* Use 'col-md-3' class for 25% width */}
+                <div className="wrap-input100 validate-input m-b-10">
+                  <label htmlFor="specialCheck" className='label1'>
+                    <input
+                      className="input100"
+                      type="checkbox"
+                      id="specialCheck"
+                      checked={special}
+                      onChange={(e) => setSpecial(e.target.checked)}
+                    />
+                    Special
+                  </label>
+                </div>
+              </div>
+              <div className="col-md-10"> {/* Use 'col-md-9' class for 75% width */}
+                <div className="wrap-input100 validate-input m-b-10" data-validate="ID number is required">
+                  <input
+                    className="input100"
+                    type="text"
+                    name="idNumber"
+                    placeholder="Enter ID number"
+                    value={idNumber}
+                    onChange={(e) => setIdNumber(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
+          </div>
             <div className="container-login100-form-btn p-t-10">
               <button className="login100-form-btn" type="submit">
                 Get Ticket
@@ -99,11 +113,7 @@ const QueueRegistration = () => {
           </form>
         </div>
       </div>
-      <PopupMessage
-        show={showSuccessPopup}
-        message={successm}
-        onClose={handleCloseSuccessPopup}
-      />
+      <PopupMessage show={showSuccessPopup} message={successm} onClose={handleCloseSuccessPopup} />
     </div>
   );
 };
