@@ -2,12 +2,74 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
 
 /* Styles for Header Component */
+/* CSS Styles */
+.table1 {
+  align-items: center;
+  justify-items: center;
+  padding: 25px 24px !important;
+  background-color: #bcf4ff;;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: center;
+}
+.card1 {
+  align-items: center;
+  justify-items: center;
+  padding: 10px 24px !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: center;
+  width: 50%;
+}
+@media screen and (max-width: 1399px) {
+.card1 {
+  width: fit-content;
+}
+}
 .grid-1-column {
   grid-template-rows: auto;
   grid-template-columns: 1fr;
   grid-auto-columns: 1fr;
   display: grid;
 }
+.card.amount-over-graph {
+  z-index: 1;
+  padding: 28px 20px 56px;
+  position: relative;
+}
+.amount-over-graph-container {
+  grid-row-gap: 4px;
+  text-align: center;
+  flex-direction: column;
+  padding-left: 18px;
+  padding-right: 18px;
+  display: flex;
+  position: absolute;
+  bottom: 52px;
+  left: 40px;
+  right: 40px;
+}
+.text-500 {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.167em;
+}
+
+.text-500.bold {
+    font-weight: 700;
+}
+
+.text-600 {
+    font-size: 30px;
+    line-height: 1.133em;
+}
+
+.text-600.bold {
+    font-weight: 700;
+}
+
 .color-neutral-500 {
   color: #aab1c6;
 }
@@ -85,6 +147,192 @@
 
 * {
   box-sizing: border-box;
+}
+
+.gap-column-20px {
+    grid-column-gap: 20px;
+}
+
+.gap-column-6px {
+    grid-column-gap: 6px;
+}
+.gap-row-8px {
+    grid-row-gap: 8px;
+}
+
+.grid-1-column {
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+    grid-auto-columns: 1fr;
+    display: grid;
+}
+
+.grid-1-column.sidebar-links-grid {
+    grid-row-gap: 4px;
+}
+
+.grid-1-column.gap-row-12px {
+    grid-row-gap: 12px;
+}
+._2-items-wrap-container {
+    grid-column-gap: 40px;
+    grid-row-gap: 16px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+
+._2-items-wrap-container.gap-column-16px {
+    grid-column-gap: 16px;
+}
+
+._2-items-wrap-container.gap-column-8px {
+    grid-column-gap: 8px;
+}
+
+._2-items-wrap-container.align-start {
+    align-items: flex-start;
+}
+.mg-bottom-8px {
+    margin-bottom: 8px;
+}
+
+.mg-bottom-16px {
+    margin-bottom: 16px;
+}
+
+.mg-bottom-24px {
+    margin-bottom: 24px;
+}
+
+.mg-bottom-32px {
+    margin-bottom: 32px;
+}
+
+.mg-bottom-40px {
+    margin-bottom: 40px;
+}
+
+.mg-bottom-48px {
+    margin-bottom: 48px;
+}
+
+.mg-top-48px {
+    margin-top: 48px;
+}
+
+.grid-3-columns {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-3-columns._1-col-tablet {
+        grid-template-columns: 1fr;
+    }
+
+.card.component-card {
+  padding: 32px;
+}
+
+.card.pd-16px {
+    padding: 16px;
+}
+
+.card.pd-24px {
+    padding: 24px;
+}
+.component-card-badge-top {
+  color: #454e66;
+  background-color: #fff;
+  border-radius: 32px;
+  padding: 6px 12px;
+  font-weight: 500;
+  line-height: 1.286em;
+}
+
+.component-card-badge-top-wrapper {
+  background-image: linear-gradient(#3d7fff, #5465ff);
+  border-radius: 32px;
+  margin-top: 24px;
+  margin-bottom: 10px;
+  padding: 1px;
+  display: inline-block;
+  overflow: hidden;
+  box-shadow: 0 2px 7px rgba(20, 20, 43, .06);
+}
+
+.inner-container._600px {
+  max-width: 600px;
+}
+
+.inner-container.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inner-container._326px {
+  max-width: 326px;
+}
+
+.inner-container._244px {
+  max-width: 244px;
+}
+
+.inner-container._244px._100-mbl,
+.inner-container._244px._100-tablet {
+  width: 100%;
+}
+
+.inner-container._720px {
+  max-width: 720px;
+}
+
+.inner-container._384px {
+  max-width: 384px;
+}
+
+.inner-container._400px {
+  max-width: 400px;
+}
+
+.inner-container._348px {
+  max-width: 348px;
+}
+
+.inner-container._388px {
+  max-width: 388px;
+}
+
+.inner-container._272px {
+  max-width: 272px;
+}
+
+.inner-container._370px {
+  max-width: 370px;
+}
+
+.inner-container._180px {
+  max-width: 180px;
+}
+
+.inner-container._334px {
+  max-width: 334px;
+}
+
+.inner-container._368px {
+  max-width: 368px;
+}
+
+.inner-container._576px {
+  max-width: 576px;
+}
+
+.inner-container._624px {
+  max-width: 624px;
+}
+
+.inner-container._542px {
+  max-width: 542px;
 }
 
 .user-table-row.table-header {
@@ -246,6 +494,9 @@
 .headerc {
   font-size: large;
   text-align: center;
+  font-weight: 800;
+  color: #1f2d54;
+  padding: 10px;
 }
 
 /* Styles for Footer Component */

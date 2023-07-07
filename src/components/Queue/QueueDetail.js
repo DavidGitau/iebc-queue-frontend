@@ -61,7 +61,6 @@ const QueueDetail = () => {
             },
           }
         );
-
         setQueues(response.data);
       } catch (error) {
         console.log('Error fetching queues:', error);
@@ -89,6 +88,7 @@ const QueueDetail = () => {
       })
     );
   };
+  
 
   return (
     <div className="limiter">

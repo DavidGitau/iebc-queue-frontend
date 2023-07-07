@@ -147,7 +147,7 @@ const StaffProfile = () => {
                           <Link to="/manage-kims" className="smaller-button">
                             <button className="login100-form-btn">Manage KIMs</button>
                           </Link>
-                            {/* <button className="login100-form-btn smaller-button" onClick={handleAllocateTimeslot}>Allocate Timeslots</button> */}
+                            <button className="login100-form-btn smaller-button" onClick={handleAllocateTimeslot}>Allocate Timeslots</button>
                             <button className="login100-form-btn smaller-button" onClick={handleDisallocateTimeslot}>Disallocate Timeslots</button>
                     
                         </div>

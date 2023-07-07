@@ -22,6 +22,7 @@ import KimsKit from './components/Queue/KimsKit';
 import QueueDetail from './components/Queue/QueueDetail';
 import CenterDetail from './components/Station/CenterDetail';
 import StaffList from './components/Staff/StaffList';
+import Queue from './components/Voter/Queue';
 
 
 const App = () => {
@@ -76,6 +77,7 @@ const App = () => {
           {isLoggedIn && localStorage.getItem('userType') === 'user' && (
             <>
               <Route path="/book" element={<BookQueue />} /> {/* Add the BookQueue component as a route */}
+              <Route path="/queue" element={<Queue />} /> {/* Add the BookQueue component as a route */}
             </>
           )}
           {isLoggedIn && localStorage.getItem('userType') === 'staff' && (

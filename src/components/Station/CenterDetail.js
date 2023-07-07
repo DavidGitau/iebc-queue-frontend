@@ -17,15 +17,18 @@ const CenterDetail = () => {
         const token = localStorage.getItem('token');
         const cid = localStorage.getItem('centerId');
 
-        const response = await axios.post(
+        const response = await axios.get(
           `${localNetworkAddress}/api/center-detail/`,
-          { cid: cid }, // Pass the cid along with the id
           {
+            params: {
+              cid: cid // Pass the cid as a query parameter
+            },
             headers: {
               Authorization: `Token ${token}`,
             },
           }
         );
+
         setVoters(response.data);
       } catch (error) {
         console.log('Error fetching polling centers:', error);

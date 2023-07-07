@@ -28,10 +28,12 @@ const LoginPage = () => {
       const token = response.data.token;
       const userType = response.data.account_type;
       const voterId = response.data.voter_id;
+      const centerId = response.data.center_id;
 
       localStorage.setItem('token', token); // Save token
       localStorage.setItem('userType', userType); // Save user type
       localStorage.setItem('voterId', voterId); // Save voterId
+      localStorage.setItem('centerId', centerId); // Save voterId
 
       // Clear form fields and error message
       setUsername('');

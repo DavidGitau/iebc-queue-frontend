@@ -137,12 +137,19 @@ const Header = ({ isLoggedIn, onLogout }) => {
                       </ul>
                     </li>
                   </>
-                ) : (
-                  <li className="nav-item">
-                    <Link to="/book" className="nav-link text-ivory">
-                      Book Queue
-                    </Link>
-                  </li>
+                  ) : (
+                      <>
+                      <li className="nav-item">
+                        <Link to="/book" className="nav-link text-ivory">
+                          Book Queue
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link to="/queue" className="nav-link text-ivory">
+                          View Queue
+                        </Link>
+                      </li>
+                      </>
                 )}
                 <li className="nav-item">
                   <Link to="/" className="nav-link text-ivory">

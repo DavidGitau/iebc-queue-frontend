@@ -21,7 +21,14 @@ const BookQueue = () => {
   const fetchTimes = async () => {
     try {
       const localNetworkAddress = `http://${window.location.hostname}:8000`;
-      const response = await axios.get(`${localNetworkAddress}/api/time-slots/`);
+      const response = await axios.get(
+        `${localNetworkAddress}/api/time-slots/`,
+        {
+          params: {
+              id : localStorage.getItem('voterId') // Pass the cid as a query parameter
+            },
+        }
+      );
       const { data } = response;
       setTimes(data || []);
     } catch (error) {
@@ -89,7 +96,7 @@ const BookQueue = () => {
         </Modal.Footer>
       </Modal>
     );
-  };
+  }; 
 
   return (
     <div className="limiter">
@@ -129,11 +136,21 @@ const BookQueue = () => {
                     const stopPeriod = stopHour >= 12 ? 'pm' : 'am';
                     const formattedStopHour = stopHour % 12 || 12;
                     const formattedStopTime = `${formattedStopHour}:${stopMinutes.toString().padStart(2, '0')} ${stopPeriod}`;
-
+                    
                     return (
-                      <option key={time.id} value={time.id}>
-                        {formattedStartTime} - {formattedStopTime}
-                      </option>
+                      <>
+                        { 
+                          time.full ? 
+                            <option key={time.id} value={time.id} className='color-badge orange' disabled>
+                              {formattedStartTime} - {formattedStopTime}
+                            </option>
+                          : <option key={time.id} value={time.id} className='color-badge blue' >
+                              {formattedStartTime} - {formattedStopTime}
+                            </option>
+                        }
+                        
+                      </>
+                      
                     );
                   })
                 ) : (
