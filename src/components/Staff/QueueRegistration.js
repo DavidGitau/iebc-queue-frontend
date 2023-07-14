@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 
 const QueueRegistration = () => {
-  const navigate = useNavigate();
   const [idNumber, setIdNumber] = useState('');
   const [error, setError] = useState('');
   const [successm, setSucess] = useState('');
@@ -33,11 +31,14 @@ const QueueRegistration = () => {
         if (response.data.success) {
           setSucess(response.data.success);
           setShowSuccessPopup(true); // Show the success popup
+          setError('');
         } else {
           setError(response.data.error);
         }
       } catch (error) {
         setError(error.response.data.error);
+        setShowSuccessPopup1(true);
+        setIdNumber('')
       }
     }
   };
@@ -45,7 +46,26 @@ const QueueRegistration = () => {
   const handleCloseSuccessPopup = () => {
     setShowSuccessPopup(false);
   };
+  const [showSuccessPopup1, setShowSuccessPopup1] = useState(false);
+  const handleCloseSuccessPopup1 = () => {
+    setShowSuccessPopup1(false);
+  };
 
+  const PopupMessage1 = ({ show, message, onClose }) => {
+    return (
+      <Modal show={show} onHide={onClose}>
+        <Modal.Header closeButton className='color-badge1 red'>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body  className='color-badge1 red'>{message}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={onClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
   const PopupMessage = ({ show, message, onClose }) => {
     return (
       <Modal show={show} onHide={onClose}>
@@ -68,7 +88,7 @@ const QueueRegistration = () => {
         <div className="wrap-login100 p-t-30 p-b-30">
           {error && (
             <div className="login100-form-title p-b-20 text-center text-dark">
-              <h6>{error}</h6>
+              {/* <h6>{error}</h6> */}
             </div>
           )}
           <div className="login100-form-title p-b-20 text-center">
@@ -107,13 +127,18 @@ const QueueRegistration = () => {
           </div>
             <div className="container-login100-form-btn p-t-10">
               <button className="login100-form-btn" type="submit">
-                Get Ticket
+                Issue Ticket
               </button>
             </div>
           </form>
         </div>
       </div>
       <PopupMessage show={showSuccessPopup} message={successm} onClose={handleCloseSuccessPopup} />
+    <PopupMessage1
+                  show={showSuccessPopup1}
+                  message={error}
+                  onClose={handleCloseSuccessPopup1}
+                />
     </div>
   );
 };

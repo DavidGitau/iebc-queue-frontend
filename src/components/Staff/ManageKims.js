@@ -49,7 +49,7 @@ const KimsManagement = () => {
   const handleManage = (stationId) => {
     console.log(stationId)
     localStorage.setItem('stationId', stationId);
-    navigate(`/kims-kit`);
+    navigate(`/kiems-kit`);
   };
 
   return (
@@ -62,7 +62,7 @@ const KimsManagement = () => {
             </div>
           )}
           <div className="login100-form-title p-b-20 text-center">
-            <h3>Kim Management</h3>
+            <h3>KIEMS Kit Management</h3>
           </div>
           <form className="login100-form validate-form" onSubmit={() => handleManage(selectedStation)}>
             <div className="wrap-input100 validate-input m-b-10" data-validate="Time is required">
@@ -87,7 +87,7 @@ const KimsManagement = () => {
             </div>
             <div className="container-login100-form-btn p-t-10">
               <button className="login100-form-btn" type="submit">
-                Manage
+                Select
               </button>
             </div>
           </form>

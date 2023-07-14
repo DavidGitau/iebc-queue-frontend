@@ -1,38 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from "axios";
 
-const useFetchData = (endpoint) => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState('');
+const localNetworkAddress = `http://${window.location.hostname}:8000`; // Get dynamic local network address with port 8000
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const localNetworkAddress = `http://${window.location.hostname}:8000`;
-        const token = localStorage.getItem('token'); // Replace with your token storage approach
+export const fetchData = async (endpoint) => {
+  try {
+    const token = localStorage.getItem('token'); // Replace with your token storage approach
 
-        if (!token) {
-          // Handle case when token is not available
-          setError('Authentication token is missing');
-          return;
-        }
-
-        const headers = {
-          Authorization: `Token ${token}`,
-        };
-
-        const response = await axios.get(`${localNetworkAddress}/api/${endpoint}/`, { headers });
-        setData(response.data);
-      } catch (error) {
-        console.log('Error fetching data:', error);
-        setError('Error fetching data');
-      }
+    if (!token) {
+      // Handle case when token is not available
+      return;
+    }
+    const headers = {
+      Authorization: `Token ${token}`,
     };
-
-    fetchData();
-  }, [endpoint]);
-
-  return { data, error };
+    const response = await axios.get(`${localNetworkAddress}/api/${endpoint}`, { headers });
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.log("Error fetching data:", error);
+    throw error;
+  }
 };
 
-export default useFetchData;
+export const postData = async (endpoint, data) => {
+  try {
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+
+    const response = await axios.post(`${localNetworkAddress}/api/${endpoint}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Set the content type to multipart form data
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.log("Error posting data:", error);
+    throw error;
+  }
+};
+
+
+export const updateData = async (endpoint, data) => {
+  try {
+    const token = localStorage.getItem('token'); // Get the token from localStorage or your preferred storage mechanism
+
+    // Generate a new token if it doesn't exist or is invalid
+    if (!token) {
+      const response = await axios.post(`${localNetworkAddress}/api/auth/token/`);
+      const { token: newToken } = response.data;
+      localStorage.setItem('token', newToken); // Save the new token to localStorage
+      axios.defaults.headers.common['Authorization'] = `Token ${newToken}`; // Set the new token in the default request headers
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
+
+    const response = await axios.patch(`${localNetworkAddress}/api/${endpoint}`, data, config);
+    return response.data;
+  } catch (error) {
+    console.log("Error updating data:", error);
+    throw error;
+  }
+};

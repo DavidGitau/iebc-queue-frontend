@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 
 
 const KimsKit = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const [idNumber, setIdNumber] = useState('');
   const [error, setError] = useState('');
   const [successm, setSucess] = useState('');

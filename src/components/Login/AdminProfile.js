@@ -1,9 +1,24 @@
-import React from 'react';
-import useFetchData from '../utils/Api';
+import React, { useState, useEffect } from 'react';
+import { fetchData } from '../utils/Api';
 
 const AdminProfile = () => {
-  const { data: profile, error } = useFetchData('profile');
+  const [profile, setProfile] = useState(null);
+  const [error, setError] = useState('');
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetchData(`profile/`);
+        setProfile(response.profile);
+        console.log(response);
+      } catch (error) {
+        console.log('Error fetching profile:', error);
+        setError('Error fetching profile');
+      }
+    };
+
+    fetchProfile();
+  }, []);
   return (
     <div>
       {profile ? (
@@ -27,10 +42,6 @@ const AdminProfile = () => {
                       </h2>
                       <p className="p1">
                         <span className="p2-container">
-                        <span className="p2-label">DOB:</span>
-                        <span className="p2-value">{profile.dob}</span>
-                        </span>
-                        <span className="p2-container">
                         <span className="p2-label">Age:</span>
                         <span className="p2-value">{profile.age}</span>
                         </span>
@@ -41,18 +52,6 @@ const AdminProfile = () => {
                         <span className="p2-container">
                         <span className="p2-label">ID Number:</span>
                         <span className="p2-value">{profile.id_number}</span>
-                        </span>
-                        <span className="p2-container">
-                        <span className="p2-label">Registered?</span>
-                        <span className="p2-value">{profile.registered ? 'Yes' : 'No'}</span>
-                        </span>
-                        <span className="p2-container">
-                        <span className="p2-label">Voter ID:</span>
-                        <span className="p2-value">{profile.voter_id || '-'}</span>
-                        </span>
-                        <span className="p2-container">
-                        <span className="p2-label">Voted?</span>
-                        <span className="p2-value">{profile.voted ? 'Yes' : 'No'}</span>
                         </span>
                       </p>
 

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import Speedometer from 'react-d3-speedometer';
+import html2pdf from 'html2pdf.js';
+
 
 const Queue = () => {
   const [queues, setQueues] = useState([]);
@@ -30,23 +32,32 @@ const Queue = () => {
       }
     };
 
-    const interval = setInterval(fetchQueues, 1000);
+    const interval = setInterval(fetchQueues, 5000);
     setFetchInterval(interval);
 
     return () => {
       clearInterval(fetchInterval);
     };
-  }, []);
-  const data = [
-    { name: 'Category 1', value: 120 },
-    { name: 'Category 2', value: 200 },
-    { name: 'Category 3', value: 150 },
-  ];
+  }, [fetchInterval]);
+  // Function to handle PDF download
+  const handleDownload = () => {
+    const element = document.getElementById('voter-table');
+    html2pdf()
+      .set({
+        margin: 0.5,
+        filename: 'queue.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+      })
+      .from(element)
+      .save();
+  };
 
   return (
     <div className="limiter">
       <div className="container">
-        <div className="row">
+        <div className="row" id="voter-table">
           {queues.map((queue, index) => (
             <div className="col-md-6 container-login100" key={queue.station.id}>
               <div className="grid-1-column">
@@ -54,7 +65,7 @@ const Queue = () => {
                   Queue {index+1} - {queue.station.id}
                 </div>
             <div className="table1 col-md-12 overflow-hidden border-none">
-                      {queue.tickets.length > 0 && (
+                      {queue.tickets.length >= 0 && (
               <div className="card1">
                 <div className="card pd-16px">
                   <div className="mg-bottom-16px">
@@ -67,11 +78,11 @@ const Queue = () => {
                   <div>
                     <BarChart width={220} height={170} data={queue.tickets}>
                         <>
-                          <XAxis dataKey="queue_number" />
+                          <XAxis dataKey="id" />
                           <YAxis />
                           <Tooltip />
                           {/* <Legend /> */}
-                          <Bar dataKey="waiting_time" fill="#8884d8" />
+                          <Bar dataKey="voter.service_time" fill="#005bea" />
                         </>
                     </BarChart>
 
@@ -113,7 +124,11 @@ const Queue = () => {
           </div>
         </div>
           ))}
-      </div>
+        </div>
+        {/* Download Button */}
+      <button className="login100-form-btn bt1" onClick={handleDownload}>
+        Download as PDF
+      </button>
       </div>
     </div>
   );

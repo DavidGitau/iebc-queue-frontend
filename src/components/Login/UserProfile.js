@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchData } from '../utils/Api';
 
 const UserProfile = () => {
   const [profile, setProfile] = useState(null);
@@ -8,20 +8,9 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const localNetworkAddress = `http://${window.location.hostname}:8000`;
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-          setError('Authentication token is missing');
-          return;
-        }
-
-        const headers = {
-          Authorization: `Token ${token}`,
-        };
-
-        const response = await axios.get(`${localNetworkAddress}/api/profile/`, { headers });
-        setProfile(response.data);
+        const response = await fetchData(`profile/`);
+        console.log(response);
+        setProfile(response);
       } catch (error) {
         console.log('Error fetching profile:', error);
         setError('Error fetching profile');
@@ -64,10 +53,10 @@ const UserProfile = () => {
                     <div className="u-container-layout u-valign-middle u-container-layout-1">
                       <h2 className="u-align-center u-text u-text-2 text-white">{profile.profile.first_name} {profile.profile.last_name}</h2>
                       <p className="p1">
-                        <span className="p2-container">
+                        {/* <span className="p2-container">
                           <span className="p2-label">DOB:</span>
                           <span className="p2-value">{profile.profile.dob}</span>
-                        </span>
+                        </span> */}
                         <span className="p2-container">
                           <span className="p2-label">Age:</span>
                           <span className="p2-value">{profile.profile.age}</span>
@@ -92,6 +81,14 @@ const UserProfile = () => {
                             </span>
                           </span>
                         )}
+                        {/* {profile.ticket && (
+                          <span className="p2-container">
+                            <span className="p2-label">Ticket:</span>
+                            <span className="p2-value">
+                              {profile.ticket.id}
+                            </span>
+                          </span>
+                        )} */}
                         <span className="p2-container">
                           <span className="p2-label">Voter ID:</span>
                           <span className="p2-value">{profile.id}</span>

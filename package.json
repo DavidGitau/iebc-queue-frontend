@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
@@ -14,6 +15,7 @@
     "bootstrap-icons": "^1.10.5",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
+    "html2pdf.js": "^0.10.1",
     "rc-slider": "^10.2.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",

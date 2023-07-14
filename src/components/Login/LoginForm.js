@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { CheckCircleFill, LockFill, PeopleFill } from "react-bootstrap-icons";
-import ProfilePage from '../pages/UserProfile';
+import UserProfile from './UserProfile';
+import AdminProfile from './AdminProfile';
+import StaffProfile from './StaffProfile';
+import { postData } from '../utils/Api';
+import { Button, Modal } from 'react-bootstrap';
 
 import img1 from "../../assets/images/login/admin.png"
 import img2 from "../../assets/images/login/user.png"
@@ -10,6 +13,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [userType, setUsertype] = useState('');
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = async (e) => {
@@ -21,14 +25,14 @@ const LoginPage = () => {
       group: selectedType // Include the selected user type (user group)
     };
     try {
-      const localNetworkAddress = `http://${window.location.hostname}:8000`; // Get dynamic local network address with port 8000
-      const response = await axios.post(`${localNetworkAddress}/api/login/`, loginData);
+      const response = await postData(`login/`, loginData);
 
       // Save authentication details
       const token = response.data.token;
       const userType = response.data.account_type;
       const voterId = response.data.voter_id;
       const centerId = response.data.center_id;
+      setUsertype(userType);
 
       localStorage.setItem('token', token); // Save token
       localStorage.setItem('userType', userType); // Save user type
@@ -46,6 +50,7 @@ const LoginPage = () => {
     } catch (error) {
       // Handle login error
       setError(error.response.data.detail); // Set the error message state
+      setShowSuccessPopup(true);
       setPassword('');
       setUsername('');
     }
@@ -56,19 +61,45 @@ const LoginPage = () => {
   const handleTypeClick = (type) => {
     setSelectedType(type);
   };
+  
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const handleCloseSuccessPopup = () => {
+    setShowSuccessPopup(false);
+  };
+
+  const PopupMessage = ({ show, message, onClose }) => {
+    return (
+      <Modal show={show} onHide={onClose}>
+        <Modal.Header closeButton className='color-badge1 red'>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body  className='color-badge1 red'>{message}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={onClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
 
   return (
     <>
       {isLoggedIn ? (
-        <ProfilePage />
+        <>
+          userType === 'user' &&    <UserProfile />
+          userType === 'admin' &&    <AdminProfile />
+          userType === 'staff' &&    <StaffProfile />
+        </>
       ) : (
         <div className="limiter">
           <div className="container-login100" style={{ backgroundImage: "url('images/img-01.jpg')" }}>
             <div className="wrap-login100 p-t-30 p-b-30">
               {error && (
                 <div className='login100-form-title p-b-20 text-center text-danger'>
-                  <h6 style={{backgroundColor: "white"}}>{error}</h6>
+                  {/* <h6 style={{backgroundColor: "white"}}>{error}</h6> */}
                 </div>
+                  
               )}
               {/* Display the error message if it exists */}
               <div className='login100-form-title p-b-20 text-center'>
@@ -90,7 +121,7 @@ const LoginPage = () => {
                       )}
                     </span>
                   </div>
-                  <div
+                  <div 
                     className={`type-inner ${selectedType === 'admin' ? 'selected' : ''}`}
                     onClick={() => handleTypeClick('admin')}
                   >
@@ -146,6 +177,11 @@ const LoginPage = () => {
               </form>
             </div>
           </div>
+          <PopupMessage
+                  show={showSuccessPopup}
+                  message={error}
+                  onClose={handleCloseSuccessPopup}
+                />
         </div>
       )}
     </>
